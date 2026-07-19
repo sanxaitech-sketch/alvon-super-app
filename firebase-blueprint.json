@@ -1,0 +1,118 @@
+{
+  "entities": {
+    "user": {
+      "title": "Alvon User",
+      "description": "Stores user wallet balance, coin balance, and upline parent references",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique identifier for the user" },
+        "name": { "type": "string", "description": "Display name of the user" },
+        "phone": { "type": "string", "description": "Phone number of the user" },
+        "walletBalance": { "type": "number", "description": "Wallet balance in INR (1 INR = 1000 Alvon Coins)" },
+        "alvonCoins": { "type": "integer", "description": "Reward coins balance" },
+        "uplineId": { "type": "string", "description": "UID of the immediate upline parent" }
+      },
+      "required": ["uid", "name", "phone", "walletBalance", "alvonCoins"]
+    },
+    "recharge": {
+      "title": "BBPS Recharge",
+      "description": "Mobile or utility recharge record registered through BBPS API",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "phone": { "type": "string" },
+        "operator": { "type": "string" },
+        "amount": { "type": "number", "description": "Recharge amount in INR" },
+        "planName": { "type": "string" },
+        "commissionCoins": { "type": "integer", "description": "Total commission in Alvon Coins (split among uplines)" },
+        "status": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "userId", "phone", "operator", "amount", "planName", "commissionCoins", "status", "timestamp"]
+    },
+    "transaction": {
+      "title": "Alvon Transaction",
+      "description": "Ledger of credits/debits in wallet or coin balances",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["credit", "debit"] },
+        "asset": { "type": "string", "enum": ["wallet", "coins"] },
+        "amount": { "type": "number" },
+        "category": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "type", "asset", "amount", "category", "timestamp"]
+    },
+    "khata_customer": {
+      "title": "Alvon Khata Customer",
+      "description": "Ledger profile of a customer, store, or supplier in Alvon Khata system",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string", "description": "The logged-in user who owns this ledger" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "businessName": { "type": "string" },
+        "transactions": { "type": "array" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "name", "phone"]
+    },
+    "vault_file": {
+      "title": "Alvon Secure Vault File",
+      "description": "Metadata for files locked inside the Secure Vault",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "size": { "type": "number" },
+        "url": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "name", "type", "url"]
+    },
+    "vault_settings": {
+      "title": "Alvon Secure Vault Settings",
+      "description": "PIN code and state parameters for Secure Vault",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "pin": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["userId", "pin"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "user",
+      "description": "User profiles"
+    },
+    "/recharges/{rechargeId}": {
+      "schema": "recharge",
+      "description": "BBPS Recharges log"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "transaction",
+      "description": "General financial ledger"
+    },
+    "/khata_customers/{customerId}": {
+      "schema": "khata_customer",
+      "description": "Customers and vendors tracked in Alvon Khata ledger"
+    },
+    "/vault_files/{fileId}": {
+      "schema": "vault_file",
+      "description": "Locked files inside Secure Vault"
+    },
+    "/vault_settings/{userId}": {
+      "schema": "vault_settings",
+      "description": "User's Vault configuration"
+    }
+  }
+}

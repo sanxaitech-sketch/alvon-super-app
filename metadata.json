@@ -1,0 +1,6 @@
+{
+  "name": "Alvon Super App",
+  "description": "The ultimate classified Mega Super App ecosystem. Access E-Commerce, 100+ E-mitra tools, JioSaavn-style Music, YouTube-style Tube, WhatsApp-style Chat, G-Suite alternatives, and native hardware utilities, ad-free.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

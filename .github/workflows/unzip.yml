@@ -1,0 +1,24 @@
+name: Unzip My App
+on: push
+permissions:
+  contents: write
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Unzip the file
+        run: unzip "my-alvon (1).zip"
+        
+      - name: Remove zip file
+        run: rm "my-alvon (1).zip"
+        
+      - name: Save unzipped files
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add .
+          git commit -m "App is unzipped and ready!"
+          git push
